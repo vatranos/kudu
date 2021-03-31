@@ -98,4 +98,7 @@ When entering Hue the error already appears:
 
 _Malformed THandleIdentifier (guid size: 17, expected 16, secret size: 17, expected 16)_
 
-Despite several tests, I still have not managed to correct the error.
+The problem was solved thanks to the help of the Cloudera / hue community with the implementation of a new version. Resolution in the following link:
+https://github.com/cloudera/hue/issues/1961
+
+
