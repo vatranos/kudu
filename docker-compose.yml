@@ -174,7 +174,7 @@ services:
         --webserver_doc_root=/opt/kudu/www
         --stderrthreshold=0
         --use_hybrid_clock=false
-  kudu-impala:
+  kuduimpala:
     image: apache/kudu:impala-latest
     ports:
       - "21000:21000"
@@ -195,7 +195,7 @@ services:
       - "8888:8888"
 #    command: /data/application/startup.sh
     depends_on:
-      - kudu-impala
+      - kuduimpala
       - kudu-mysql
     volumes:
       - ./conf/hue.ini:/usr/share/hue/desktop/conf/z-hue.ini
