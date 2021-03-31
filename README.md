@@ -1,44 +1,44 @@
-# Arquitecturas BigData y Datawarehouse
+# BigData and Datawarehouse architectures
 
-Sumergido en la tarea de encontrar alternativas que permitan tener un datawarehouse sin tener que incurrir en costos elevados o adicionales a la infraestructura ya contenida. 
+Immersed in the task of finding alternatives that allow having a data warehouse without having to incur high or additional costs to the already contained infrastructure.
 
 ## Kudu
-### Introducción
-Para poder evaluar Kudu y su conexión con el resto de las herramientas que poseemos estoy en la tarea de instalar Kudu de manera completa en contenedores. 
+### Introduction
+In order to evaluate Kudu and its connection with the rest of the tools that we have, I am in the task of installing Kudu completely in containers.
 
-Siguiendo el quickstart de Kudu: [Apache Kudu Quickstart](https://kudu.apache.org/docs/quickstart.html)
-Inicie el armado de un pequeño cluster de prueba. 
+Following Kudu's quickstart: [Apache Kudu Quickstart] (https://kudu.apache.org/docs/quickstart.html)
+Initiate the assembly of a small test cluster.
 
-Respaldado en el ejemplo: [Apache Impala Quickstart](https://github.com/apache/kudu/tree/master/examples/quickstart/impala) levanté impala junto al cluster de kudu.
+Supported by the example: [Apache Impala Quickstart] (https://github.com/apache/kudu/tree/master/examples/quickstart/impala) I picked up impala next to the kudu cluster.
 
-Kudu tiene una estrecha integración con Apache Impala, lo que le permite usar Impala para insertar, consultar, actualizar y eliminar datos de Tablas Kudu utilizando la sintaxis SQL de Impala, como una alternativa al uso de las API de Kudu para crear una aplicación Kudu personalizada. 
+Kudu has tight integration with Apache Impala, allowing you to use Impala to insert, query, update, and delete data from Kudu Tables using Impala SQL syntax, as an alternative to using the Kudu APIs to create a custom Kudu application.
 
+And to be able to consult it graphically, I added Hue following the following instructions: [Cloudera- Hue Server] (https://github.com/cloudera/hue/tree/testing/tools/docker/hue).
 
-y para poder consultar de manera gráfica agregué Hue siguiendo el siguiente instructivo: [Cloudera- Hue Server](https://github.com/cloudera/hue/tree/testing/tools/docker/hue) .
+### Deployment steps by step
+Create a specific folder for the different configuration files and the compose. For example: __/home/docker/kudu__
+There you must create a __conf__ folder where we will save all the configuration files used by Hue.
 
-### Pasos a paso del despliegue
-Crear una carpeta específica para los diferentes archivos de configuración y el compose. Por ejemplo __/home/docker/kudu__ .
-Allí se debe crear una carpeta __conf__ donde guararemos todos los archivos de configuración utilizados por Hue.
+Set the KUDU_QUICKSTART_IP variable:
+```
+export KUDU_QUICKSTART_IP = $ (ifconfig | grep "inet" | grep -Fv 127.0.0.1 | awk '{print $ 2}' | tail -1)
+```
 
-Setear la variable KUDU_QUICKSTART_IP: 
-export KUDU_QUICKSTART_IP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 |  awk '{print $2}' | tail -1)
+Copy the files: docker-compose.yml, startup.sh, conf/hue.ini and conf/init.sql
 
-Copiar los archivos: docker-compose.yml, startup.sh , conf/hue.ini y conf/init.sql
-
-inciar el cluster: 
+Start the cluster:
 
 ```
 # docker-compose up -d
 ```
 
-Para ejecutar una prueba con impala-shell conectado a kudu, debemos ingresar al container que está corriendo con impala: 
+To run a test with impala-shell connected to kudu, we must enter the container that is running with impala:
 
 ```
 # docker exec -it kudu-impala impala-shell
 ```
 
-Allí podemos ejecutar diferentes pruebas como las que se encuentran en la web: [Uso de Apache Kudu con Apache Impala](https://kudu.apache.org/docs/kudu_impala_integration.html)
-
+There we can run different tests like those found on the web: [Using Apache Kudu with Apache Impala] (https://kudu.apache.org/docs/kudu_impala_integration.html)
 
 ```SQL
 
@@ -47,12 +47,12 @@ CREATE TABLE my_first_table
 (
   id BIGINT,
   name STRING,
-  PRIMARY KEY(id)
+  PRIMARY KEY (id)
 )
 PARTITION BY HASH PARTITIONS 4
 STORED AS KUDU;
 
---Insert simple row
+-- Insert simple row
 INSERT INTO my_first_table VALUES (99, "sarah");
 SELECT * FROM my_first_table;
 
@@ -61,7 +61,7 @@ INSERT INTO my_first_table VALUES (1, "john"), (2, "jane"), (3, "jim");
 SELECT * FROM my_first_table;
 
 -- Update a row.
-UPDATE my_first_table SET name="bob" where id = 3;
+UPDATE my_first_table SET name = "bob" where id = 3;
 SELECT * FROM my_first_table;
 
 -- Use upsert to insert a new row and update another.
@@ -73,28 +73,29 @@ DELETE FROM my_first_table WHERE id = 99;
 SELECT * FROM my_first_table;
 
 -- Delete multiple rows.
-DELETE FROM my_first_table WHERE id < 3;
+DELETE FROM my_first_table WHERE id <3;
 SELECT * FROM my_first_table;
 
 
 CREATE TABLE new_table
 PRIMARY KEY (ts, name)
-PARTITION BY HASH(name) PARTITIONS 8
+PARTITION BY HASH (name) PARTITIONS 8
 STORED AS KUDU
 AS SELECT id, name FROM my_first_table;
 
 ```
 
-Para visualizar la interfaz web de Kudu, acceder a: http://myHost:8050/
+To view the Kudu web interface, access: http://myHost:8050/
 
-Para visualizar la interfaz web de Impala, acceder a: http://myHost:25000/
+To view the Impala web interface, go to: http://myHost:25000/
 
-Para ingresar a Hue acceder a: http://myHost:8888/
+To access Hue access: http://myHost:8888/
 
-La primera vez que ingresas a Hue solicita que ingreses el usuario y contraseña que se seteará como administrador. 
+The first time you enter Hue, it asks you to enter the username and password that will be set as administrator.
 
-### Problemas con Hue
-Al ingresar a Hue ya aparece el error: 
-_Malformed THandleIdentifier (guid size: 17, expected 16, secret size: 17, expected 16)_
+### Problems with Hue
+When entering Hue the error already appears:
 
-A pesar de realizar varias pruebas, aun no he conseguido corregir el error.
+_Malformed THandleIdentifier (guid size: 17, expected 16, secret size: 17, expected 16) _
+
+Despite several tests, I still have not managed to correct the error.
