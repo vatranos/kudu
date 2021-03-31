@@ -96,6 +96,6 @@ The first time you enter Hue, it asks you to enter the username and password tha
 ### Problems with Hue
 When entering Hue the error already appears:
 
-_Malformed THandleIdentifier (guid size: 17, expected 16, secret size: 17, expected 16) _
+_Malformed THandleIdentifier (guid size: 17, expected 16, secret size: 17, expected 16)_
 
 Despite several tests, I still have not managed to correct the error.
