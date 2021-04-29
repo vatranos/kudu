@@ -100,3 +100,11 @@ _Malformed THandleIdentifier (guid size: 17, expected 16, secret size: 17, expec
 
 El problema fue resuelto gracias a la ayuda de la comunidad de Cloudera/hue con la implementacion de una nueva version. Resolucion en el siguiente link:
 https://github.com/cloudera/hue/issues/1961
+
+## Citus
+Citus es una versión de PostgreSQL distrubido. Que permite sumarle a la familiarizacion con postgres la potencialidad de procesamiento distribuido. 
+
+
+## Presto
+
+
