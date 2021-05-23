@@ -109,5 +109,7 @@ Citus es una versión de PostgreSQL distrubido. Que permite sumarle a la familia
 
 
 # Bibliografía adicional
-Cuestiones a tener en cuenta para la elección de nuevas aqruitecturas: Necesidad, Costo, Código Abierto vs. Propietario, Licencia, Madurez, Documentación, Experiencia en equipo, Tracción , Soporte y servicios : 
+- Cuestiones a tener en cuenta para la elección de nuevas aqruitecturas: Necesidad, Costo, Código Abierto vs. Propietario, Licencia, Madurez, Documentación, Experiencia en equipo, Tracción , Soporte y servicios : 
 https://medium.com/codex/choosing-technologies-as-an-architect-8284a661f6a4#
+
+- Documentacion general de experiencias previas de Kudu: https://blog.clairvoyantsoft.com/guide-to-using-apache-kudu-and-performance-comparison-with-hdfs-453c4b26554f
